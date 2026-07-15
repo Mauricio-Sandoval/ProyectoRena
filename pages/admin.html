@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Admin — Viajes CDMX</title>
+    <link rel="stylesheet" href="../styles/style.css">
+    <link rel="stylesheet" href="../styles/admin.css">
+</head>
+<body>
+    <main class="container">
+        <div class="page-header">
+            <h1>Panel de Administración</h1>
+            <p>Gestiona conductores, viajes y reservas</p>
+        </div>
+
+        <div class="admin-stats" id="stats-container">
+            <div class="stat-card"><div class="stat-label">Cargando...</div></div>
+        </div>
+
+        <div class="admin-section">
+            <h2>🚗 Conductores</h2>
+            <button class="btn btn-primary" id="btn-nuevo-conductor">+ Nuevo conductor</button>
+            <div id="conductores-list" class="loader"><div class="spinner"></div></div>
+        </div>
+
+        <div class="admin-section">
+            <h2>🚌 Viajes</h2>
+            <button class="btn btn-primary" id="btn-nuevo-viaje">+ Nuevo viaje</button>
+            <div id="viajes-list" class="loader"><div class="spinner"></div></div>
+        </div>
+
+        <div class="admin-section">
+            <h2>🎫 Reservas</h2>
+            <div id="reservas-list" class="loader"><div class="spinner"></div></div>
+        </div>
+    </main>
+
+    <!-- Modal conductor -->
+    <div class="modal-overlay" id="modal-conductor">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 id="modal-conductor-title">Nuevo conductor</h2>
+                <button class="modal-close" data-close="modal-conductor">&times;</button>
+            </div>
+            <form id="form-conductor">
+                <input type="hidden" id="conductor-id">
+                <div class="form-group">
+                    <label>Nombre</label>
+                    <input type="text" id="conductor-nombre" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Teléfono</label>
+                    <input type="text" id="conductor-telefono" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Licencia</label>
+                    <input type="text" id="conductor-licencia" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="conductor-activo" checked> Activo
+                    </label>
+                </div>
+                <button type="submit" class="btn btn-success">Guardar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal viaje -->
+    <div class="modal-overlay" id="modal-viaje">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 id="modal-viaje-title">Nuevo viaje</h2>
+                <button class="modal-close" data-close="modal-viaje">&times;</button>
+            </div>
+            <form id="form-viaje">
+                <input type="hidden" id="viaje-id">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Origen</label>
+                        <input type="text" id="viaje-origen" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Destino</label>
+                        <input type="text" id="viaje-destino" class="form-control" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Fecha</label>
+                        <input type="date" id="viaje-fecha" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Hora</label>
+                        <input type="time" id="viaje-hora" class="form-control" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Conductor</label>
+                    <select id="viaje-conductor" class="form-control" required></select>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Precio ($)</label>
+                        <input type="number" id="viaje-precio" class="form-control" step="0.01" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Cupos totales</label>
+                        <input type="number" id="viaje-cupos" class="form-control" min="1" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-success">Guardar</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../config.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/admin.js"></script>
+    <script src="../js/conductores.js"></script>
+    <script src="../js/viajes.js"></script>
+    <script src="../js/reservas.js"></script>
+</body>
+</html>

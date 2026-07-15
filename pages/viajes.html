@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Viajes — Viajes CDMX</title>
+    <link rel="stylesheet" href="../styles/style.css">
+    <link rel="stylesheet" href="../styles/admin.css">
+</head>
+<body>
+    <main class="container">
+        <div class="page-header">
+            <h1>Gestión de Viajes</h1>
+            <p>Administra los viajes disponibles</p>
+        </div>
+
+        <button class="btn btn-primary" id="btn-nuevo-viaje">+ Nuevo viaje</button>
+        <div id="viajes-list" class="loader" style="margin-top:1rem;"><div class="spinner"></div></div>
+    </main>
+
+    <!-- Modal viaje -->
+    <div class="modal-overlay" id="modal-viaje">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 id="modal-viaje-title">Nuevo viaje</h2>
+                <button class="modal-close" data-close="modal-viaje">&times;</button>
+            </div>
+            <form id="form-viaje">
+                <input type="hidden" id="viaje-id">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Origen</label>
+                        <input type="text" id="viaje-origen" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Destino</label>
+                        <input type="text" id="viaje-destino" class="form-control" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Fecha</label>
+                        <input type="date" id="viaje-fecha" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Hora</label>
+                        <input type="time" id="viaje-hora" class="form-control" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Conductor</label>
+                    <select id="viaje-conductor" class="form-control" required></select>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Precio ($)</label>
+                        <input type="number" id="viaje-precio" class="form-control" step="0.01" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Cupos totales</label>
+                        <input type="number" id="viaje-cupos" class="form-control" min="1" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-success">Guardar</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../config.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/viajes.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const profile = await requireRole('admin');
+            if (!profile) return;
+            renderNavbar(profile, [
+                { href: 'admin.html', label: '🏠 Panel' },
+                { href: 'conductores.html', label: '🚗 Conductores' },
+                { href: 'viajes.html', label: '🚌 Viajes' },
+                { href: 'reservas.html', label: '🎫 Reservas' }
+            ]);
+            await cargarViajesAdmin();
+            document.getElementById('btn-nuevo-viaje').addEventListener('click', () => abrirModalViaje());
+            document.querySelectorAll('[data-close]').forEach(b =>
+                b.addEventListener('click', () => document.getElementById(b.dataset.close).classList.remove('active'))
+            );
+        });
+    </script>
+</body>
+</html>

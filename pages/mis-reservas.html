@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mis Reservas — Viajes CDMX</title>
+    <link rel="stylesheet" href="../styles/style.css">
+    <link rel="stylesheet" href="../styles/cliente.css">
+</head>
+<body>
+    <main class="container">
+        <div class="page-header">
+            <h1>Mis Reservas</h1>
+            <p>Historial y estado de tus reservas</p>
+        </div>
+        <div id="mis-reservas" class="loader"><div class="spinner"></div></div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../config.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/reservas.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const profile = await requireRole('cliente');
+            if (!profile) return;
+            renderNavbar(profile, [
+                { href: 'cliente.html', label: '🚌 Viajes' },
+                { href: 'mis-reservas.html', label: '🎫 Mis reservas' }
+            ]);
+            await mostrarMisReservas();
+        });
+
+async function mostrarMisReservas() {
+    const reservas = await cargarMisReservas();
+    const cont = document.getElementById('mis-reservas');
+
+    if (!reservas.length) {
+        cont.innerHTML = `<div class="alert alert-info">Aún no tienes reservas. <a href="cliente.html">Explora viajes disponibles</a>.</div>`;
+        return;
+    }
+
+    cont.innerHTML = `
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Viaje</th><th>Fecha</th><th>Conductor</th>
+                        <th>Cantidad</th><th>Total</th><th>Estado</th><th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${reservas.map(r => `
+                        <tr>
+                            <td>${r.viajes?.origen} → ${r.viajes?.destino}</td>
+                            <td>${formatDate(r.viajes?.fecha)}<br><small>${formatTime(r.viajes?.hora)}</small></td>
+                            <td>${r.conductor_nombre}</td>
+                            <td>${r.cantidad}</td>
+                            <td>${formatMoney(r.total)}</td>
+                            <td><span class="status status-${r.estado.toLowerCase()}">${r.estado}</span></td>
+                            <td>
+                                ${r.estado === 'Reservado'
+                                    ? `<button class="btn btn-danger btn-sm" onclick="handleCancelar(${r.id})">Cancelar</button>`
+                                    : '-'}
+                            </td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            </table>
+        </div>
+    `;
+}
+        async function handleCancelar(id) {
+            const ok = await cancelarReserva(id);
+            if (ok) mostrarMisReservas();
+        }
+    </script>
+</body>
+</html>

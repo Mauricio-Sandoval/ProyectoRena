@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar sesión — Viajes CDMX</title>
+    <link rel="stylesheet" href="../styles/style.css">
+    <link rel="stylesheet" href="../styles/login.css">
+</head>
+<body>
+    <div class="login-wrapper">
+        <div class="login-card">
+            <h1>🚐 Viajes CDMX</h1>
+            <p class="subtitle">Accede a tu cuenta o regístrate</p>
+
+            <div class="tabs">
+                <button id="tab-login" class="active">Iniciar sesión</button>
+                <button id="tab-register">Registrarse</button>
+            </div>
+
+            <!-- FORMULARIO LOGIN -->
+            <form id="form-login" class="active">
+                <div class="form-group">
+                    <label for="login-email">Correo electrónico</label>
+                    <input type="email" id="login-email" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Contraseña</label>
+                    <input type="password" id="login-password" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Entrar</button>
+            </form>
+
+            <!-- FORMULARIO REGISTRO -->
+            <form id="form-register">
+                <div class="form-group">
+                    <label for="reg-nombre">Nombre completo</label>
+                    <input type="text" id="reg-nombre" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg-email">Correo electrónico</label>
+                    <input type="email" id="reg-email" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg-password">Contraseña (mín. 6 caracteres)</label>
+                    <input type="password" id="reg-password" class="form-control" minlength="6" required>
+                </div>
+                <button type="submit" class="btn btn-success">Crear cuenta</button>
+            </form>
+
+            <div id="login-message"></div>
+
+            <a href="../index.html" class="back-link">← Volver al inicio</a>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../config.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/login.js"></script>
+</body>
+</html>

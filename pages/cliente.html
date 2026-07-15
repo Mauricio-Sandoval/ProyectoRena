@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mis Viajes — Viajes CDMX</title>
+    <link rel="stylesheet" href="../styles/style.css">
+    <link rel="stylesheet" href="../styles/cliente.css">
+</head>
+<body>
+    <main class="container">
+        <div class="page-header">
+            <h1>Viajes Disponibles</h1>
+            <p>Encuentra tu próximo viaje por la CDMX</p>
+        </div>
+
+        <div class="filtros">
+            <div class="form-group" style="margin:0;">
+                <label>Origen</label>
+                <input type="text" id="filtro-origen" class="form-control" placeholder="Ej: Polanco">
+            </div>
+            <div class="form-group" style="margin:0;">
+                <label>Destino</label>
+                <input type="text" id="filtro-destino" class="form-control" placeholder="Ej: Coyoacán">
+            </div>
+            <div class="form-group" style="margin:0;">
+                <label>Fecha</label>
+                <input type="date" id="filtro-fecha" class="form-control">
+            </div>
+            <button class="btn btn-primary" id="btn-buscar">🔍 Buscar</button>
+        </div>
+
+        <div id="viajes-grid" class="viajes-grid">
+            <div class="loader" style="grid-column:1/-1;"><div class="spinner"></div></div>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../config.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/pdf-generator.js"></script>
+    <script src="../js/email-sender.js"></script>
+    <script src="../js/reservas.js"></script>
+    <script src="../js/cliente.js"></script>
+
+</body>
+</html>

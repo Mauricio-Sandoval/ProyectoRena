@@ -1,0 +1,17 @@
+.filtros {
+    background: white;
+    padding: 1.5rem;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr auto;
+    gap: 1rem;
+    align-items: end;
+}
+
+@media (max-width: 768px) {
+    .filtros { grid-template-columns: 1fr; }
+}
+
+.filtros .btn { height: 42px; }
