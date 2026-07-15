@@ -82,3 +82,10 @@ async function cargarViajesCliente() {
         `;
     }).join('');
 }
+
+async function handleReservar(viajeId) {
+    const cantidad = parseInt(prompt('¿Cuántos lugares deseas reservar?', '1'));
+    if (!cantidad || cantidad < 1) return;
+    const ok = await reservarViaje(viajeId, cantidad);
+    if (ok) cargarViajesCliente();
+}
